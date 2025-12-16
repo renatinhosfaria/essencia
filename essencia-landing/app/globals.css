@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+:root {
+  /* Essencia 'Premium' Palette */
+  /* Primary: Fresh, vibrant lime/green for growth and vitality */
+  --primary: #A3D154; 
+  --primary-foreground: #1A3300;
+  
+  /* Secondary: Warm, energetic orange for playfulness */
+  --secondary: #FB923C;
+  --secondary-foreground: #431407;
+
+  /* Accent: Soft Blue/Teal for trust and calm */
+  --accent: #22D3EE;
+  --accent-foreground: #083344;
+  
+  /* Neutral: Sophisticated greys */
+  --neutral-50: #F8FAFC;
+  --neutral-100: #F1F5F9;
+  --neutral-200: #E2E8F0;
+  --neutral-500: #64748B;
+  --neutral-800: #1E293B;
+  --neutral-900: #0F172A;
+
+  /* Backgrounds */
+  --background: #FFFFFF;
+  --background-alt: #F8FAFC;
+  --surface: #FFFFFF;
+  
+  /* Semantic */
+  --success: #22C55E;
+  --warning: #F59E0B;
+  --error: #EF4444;
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  
+  --color-neutral-50: var(--neutral-50);
+  --color-neutral-100: var(--neutral-100);
+  --color-neutral-200: var(--neutral-200);
+  --color-neutral-500: var(--neutral-500);
+  --color-neutral-800: var(--neutral-800);
+  --color-neutral-900: var(--neutral-900);
+
+  --color-background: var(--background);
+  --color-background-alt: var(--background-alt);
+  --color-surface: var(--surface);
+
+  --font-display: var(--font-montserrat), system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+  
+  --shadow-premium: 0 10px 40px -10px rgba(0,0,0,0.08);
+  --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--neutral-800);
+  font-family: var(--font-body);
+  @apply antialiased;
+}
+
+/* Utilities */
+@layer utilities {
+  .glass-panel {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+  }
+  
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-green-500;
+  }
+
+  .text-gradient-secondary {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-secondary to-orange-500;
+  }
+  
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+}

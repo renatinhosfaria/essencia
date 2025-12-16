@@ -1,0 +1,30 @@
+export class PaginationQueryDto {
+  page?: number = 1;
+  limit?: number = 20;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc' = 'desc';
+}
+
+export class PaginatedResponseDto<T> {
+  data: T[];
+  meta: {
+    page: number;
+    limit: number;
+    total: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  };
+
+  constructor(data: T[], total: number, page: number, limit: number) {
+    this.data = data;
+    this.meta = {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+      hasNextPage: page < Math.ceil(total / limit),
+      hasPreviousPage: page > 1,
+    };
+  }
+}

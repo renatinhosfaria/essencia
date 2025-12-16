@@ -1,0 +1,232 @@
+# Docker Compose - Essência Platform (Full Stack)
+# Run: docker-compose up -d
+
+services:
+  # ========================================
+  # Infrastructure Services
+  # ========================================
+  postgres:
+    image: postgres:16
+    container_name: essencia-postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: essencia
+    ports:
+      - "5433:5432"
+    volumes:
+      - essencia_pgdata:/var/lib/postgresql/data
+      - ./essencia-api/docker/init:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - essencia-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: essencia-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - essencia_redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - essencia-network
+
+  minio:
+    image: minio/minio:latest
+    container_name: essencia-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - essencia_minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+    networks:
+      - essencia-network
+
+  # ========================================
+  # API Microservices
+  # ========================================
+  db-bootstrap:
+    image: node:20-alpine
+    container_name: essencia-db-bootstrap
+    working_dir: /app
+    volumes:
+      - ./essencia-api:/app
+    environment:
+      - NODE_ENV=development
+      - DATABASE_MIGRATIONS_URL=postgresql://essencia_migrations:essencia_migrations@postgres:5432/essencia
+      - STORAGE_ENDPOINT=http://minio:9000
+      - STORAGE_BUCKET=essencia-media
+      - STORAGE_ACCESS_KEY=minioadmin
+      - STORAGE_SECRET_KEY=minioadmin
+      - S3_ENDPOINT=http://minio:9000
+      - S3_BUCKET=essencia-media
+      - S3_ACCESS_KEY=minioadmin
+      - S3_SECRET_KEY=minioadmin
+    command:
+      - sh
+      - -c
+      - |
+        if [ ! -d node_modules ]; then npm ci; else echo "node_modules present, skipping npm ci"; fi
+        DATABASE_URL="$$DATABASE_MIGRATIONS_URL" npm run db:setup
+        DATABASE_URL="$$DATABASE_MIGRATIONS_URL" npm run db:seed:demo
+        DATABASE_URL="postgresql://essencia_app:essencia_app@postgres:5432/essencia" npm run db:verify-rls
+        npm run storage:setup
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    networks:
+      - essencia-network
+
+  core:
+    build:
+      context: ./essencia-api
+      dockerfile: docker/Dockerfile.core
+    container_name: essencia-core
+    ports:
+      - "3010:3010"
+    environment:
+      - NODE_ENV=production
+      - PORT=3010
+      - DATABASE_URL=postgresql://essencia_app:essencia_app@postgres:5432/essencia
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - JWT_EXPIRES_IN=15m
+      - JWT_REFRESH_EXPIRES_IN=7d
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      db-bootstrap:
+        condition: service_completed_successfully
+    networks:
+      - essencia-network
+    restart: unless-stopped
+
+  engagement:
+    build:
+      context: ./essencia-api
+      dockerfile: docker/Dockerfile.engagement
+    container_name: essencia-engagement
+    ports:
+      - "3011:3011"
+    environment:
+      - NODE_ENV=production
+      - PORT=3011
+      - DATABASE_URL=postgresql://essencia_app:essencia_app@postgres:5432/essencia
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+      - S3_ENDPOINT=http://minio:9000
+      - S3_BUCKET=essencia-media
+      - S3_ACCESS_KEY=minioadmin
+      - S3_SECRET_KEY=minioadmin
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      db-bootstrap:
+        condition: service_completed_successfully
+    networks:
+      - essencia-network
+    restart: unless-stopped
+
+  gateway:
+    build:
+      context: ./essencia-api
+      dockerfile: docker/Dockerfile.gateway
+    container_name: essencia-gateway
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - DATABASE_URL=postgresql://essencia_app:essencia_app@postgres:5432/essencia
+      - REDIS_URL=redis://redis:6379
+      - S3_ENDPOINT=http://minio:9000
+      - S3_BUCKET=essencia-media
+      - S3_ACCESS_KEY=minioadmin
+      - S3_SECRET_KEY=minioadmin
+      - CORE_SERVICE_URL=http://core:3010
+      - ENGAGEMENT_SERVICE_URL=http://engagement:3011
+      - JWT_SECRET=your-super-secret-jwt-key-change-in-production
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      core:
+        condition: service_started
+      engagement:
+        condition: service_started
+      db-bootstrap:
+        condition: service_completed_successfully
+    networks:
+      - essencia-network
+    restart: unless-stopped
+
+  # ========================================
+  # Frontend Applications
+  # ========================================
+  landing:
+    build:
+      context: ./essencia-landing
+      dockerfile: Dockerfile
+    container_name: essencia-landing
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://localhost:3000/api/v1
+    depends_on:
+      - gateway
+    networks:
+      - essencia-network
+    restart: unless-stopped
+
+  admin:
+    build:
+      context: ./essencia-admin
+      dockerfile: Dockerfile
+    container_name: essencia-admin
+    ports:
+      - "3002:3000"
+    environment:
+      - NODE_ENV=production
+      - NEXT_PUBLIC_API_URL=http://localhost:3000/api/v1
+    depends_on:
+      - gateway
+    networks:
+      - essencia-network
+    restart: unless-stopped
+
+networks:
+  essencia-network:
+    driver: bridge
+
+volumes:
+  essencia_pgdata:
+  essencia_minio_data:
+  essencia_redis_data:

@@ -1,0 +1,26 @@
+services:
+  # Reverse proxy for production-like single-host setup.
+  # Usage:
+  #   docker compose -f docker-compose.yml -f docker-compose.proxy.yml up -d --build
+  reverse-proxy:
+    image: nginx:1.27-alpine
+    container_name: essencia-reverse-proxy
+    ports:
+      - '3000:80'
+    volumes:
+      - ./docker/reverse-proxy/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - gateway
+      - engagement
+    networks:
+      - essencia-network
+
+  # Remove direct host exposure in proxy mode (single-host entrypoint is reverse-proxy).
+  gateway:
+    ports: !reset []
+
+  engagement:
+    ports: !reset []
+
+  core:
+    ports: !reset []

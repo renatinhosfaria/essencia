@@ -1,0 +1,35 @@
+# Base stage for all services
+FROM node:20-alpine AS base
+WORKDIR /app
+RUN apk add --no-cache libc6-compat
+
+# Dependencies stage
+FROM base AS deps
+COPY package*.json ./
+RUN npm ci --only=production
+
+# Build stage
+FROM base AS builder
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build:engagement
+
+# Production stage
+FROM base AS runner
+ENV NODE_ENV=production
+ENV PORT=3011
+
+# Create non-root user
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nestjs
+
+COPY --from=deps /app/node_modules ./node_modules
+COPY --from=builder /app/dist/apps/engagement ./dist/apps/engagement
+COPY --from=builder /app/package.json ./package.json
+
+USER nestjs
+
+EXPOSE 3011
+
+CMD ["node", "dist/apps/engagement/main"]

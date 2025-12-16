@@ -1,0 +1,103 @@
+@import "tailwindcss";
+
+/* @plugin "tailwindcss-animate"; */
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: var(--font-inter);
+  --radius: 0.6rem;
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+:root {
+  /* Essencia 'Premium' Palette - Copied from essencia-landing */
+  --primary: #A3D154;  /* Fresh Lime */
+  --primary-foreground: #1A3300;
+
+  --secondary: #FB923C; /* Energetic Orange */
+  --secondary-foreground: #431407;
+
+  --accent: #22D3EE; /* Soft Blue/Teal */
+  --accent-foreground: #083344;
+  
+  --background: #FFFFFF;
+  --foreground: #1E293B; /* neutral-800 */
+
+  --card: #FFFFFF;
+  --card-foreground: #1E293B;
+
+  --popover: #FFFFFF;
+  --popover-foreground: #1E293B;
+
+  --muted: #F1F5F9; /* neutral-100 */
+  --muted-foreground: #64748B; /* neutral-500 */
+
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+
+  --border: #E2E8F0; /* neutral-200 */
+  --input: #E2E8F0;
+  --ring: #A3D154;
+
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: #0F172A; /* neutral-900 */
+  --foreground: #F8FAFC; /* neutral-50 */
+
+  --card: #1E293B; /* neutral-800 */
+  --card-foreground: #F8FAFC;
+
+  --popover: #1E293B;
+  --popover-foreground: #F8FAFC;
+
+  --primary: #A3D154;
+  --primary-foreground: #1A3300;
+
+  --secondary: #FB923C;
+  --secondary-foreground: #431407;
+
+  --muted: #1E293B;
+  --muted-foreground: #94A3B8;
+
+  --accent: #083344;
+  --accent-foreground: #22D3EE;
+
+  --destructive: #7F1D1D;
+  --destructive-foreground: #F8FAFC;
+
+  --border: #1E293B;
+  --input: #1E293B;
+  --ring: #A3D154;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

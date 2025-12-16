@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "SlashCommand(/bmad:bmm:workflows:workflow-init)",
+      "SlashCommand(/bmad:bmm:workflows:code-review)",
+      "Bash(npm run db:rls:*)",
+      "SlashCommand(/bmad:bmm:workflows:sprint-status)",
+      "Bash(npm test:*)",
+      "Bash(npm run lint)"
+    ]
+  }
+}

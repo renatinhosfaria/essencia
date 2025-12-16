@@ -1,0 +1,1695 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Essencia - Design Directions</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        /* Brand Colors */
+        --verde-lima: #cede6c;
+        --verde-lima-dark: #b8c85a;
+        --laranja: #f29131;
+        --laranja-dark: #e07b1a;
+        --cinza: #9fa1a4;
+
+        /* Semantic Colors */
+        --background: #ffffff;
+        --background-alt: #f8f9fa;
+        --foreground: #333333;
+        --foreground-muted: #6b7280;
+        --success: #22c55e;
+        --error: #ef4444;
+
+        /* Spacing */
+        --space-1: 4px;
+        --space-2: 8px;
+        --space-3: 12px;
+        --space-4: 16px;
+        --space-6: 24px;
+        --space-8: 32px;
+
+        /* Radius */
+        --radius-sm: 4px;
+        --radius-md: 8px;
+        --radius-lg: 12px;
+        --radius-xl: 16px;
+        --radius-2xl: 24px;
+        --radius-full: 9999px;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--background-alt);
+        color: var(--foreground);
+        line-height: 1.5;
+      }
+
+      /* Header */
+      .header {
+        background: var(--background);
+        padding: var(--space-6);
+        border-bottom: 1px solid #e5e7eb;
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .header h1 {
+        font-size: 24px;
+        font-weight: 700;
+        color: var(--foreground);
+        margin-bottom: var(--space-2);
+      }
+
+      .header p {
+        color: var(--foreground-muted);
+        font-size: 14px;
+      }
+
+      /* Direction Selector */
+      .direction-selector {
+        display: flex;
+        gap: var(--space-3);
+        padding: var(--space-4) var(--space-6);
+        background: var(--background);
+        border-bottom: 1px solid #e5e7eb;
+        overflow-x: auto;
+        position: sticky;
+        top: 88px;
+        z-index: 99;
+      }
+
+      .direction-btn {
+        padding: var(--space-3) var(--space-6);
+        border: 2px solid #e5e7eb;
+        background: var(--background);
+        border-radius: var(--radius-full);
+        font-family: inherit;
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: all 0.2s ease;
+      }
+
+      .direction-btn:hover {
+        border-color: var(--verde-lima);
+        background: rgba(206, 222, 108, 0.1);
+      }
+
+      .direction-btn.active {
+        background: var(--verde-lima);
+        border-color: var(--verde-lima);
+        color: var(--foreground);
+      }
+
+      /* Mockup Container */
+      .mockup-container {
+        max-width: 420px;
+        margin: var(--space-8) auto;
+        background: var(--background);
+        border-radius: var(--radius-2xl);
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        overflow: hidden;
+        border: 8px solid #1a1a1a;
+        position: relative;
+      }
+
+      /* Phone Frame */
+      .phone-notch {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 150px;
+        height: 30px;
+        background: #1a1a1a;
+        border-radius: 0 0 20px 20px;
+        z-index: 10;
+      }
+
+      .mockup-screen {
+        height: 800px;
+        overflow-y: auto;
+        position: relative;
+      }
+
+      /* Direction Styles */
+      .direction {
+        display: none;
+        min-height: 100%;
+      }
+
+      .direction.active {
+        display: block;
+      }
+
+      /* ============================================ */
+      /* DIRECTION 1: Clean Minimal */
+      /* ============================================ */
+      .d1 {
+        background: #ffffff;
+      }
+
+      .d1 .status-bar {
+        height: 44px;
+        padding: 12px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .d1 .header-section {
+        padding: 40px 24px 24px;
+      }
+
+      .d1 .greeting {
+        font-size: 28px;
+        font-weight: 300;
+        color: var(--foreground);
+        margin-bottom: 4px;
+      }
+
+      .d1 .greeting strong {
+        font-weight: 600;
+      }
+
+      .d1 .date {
+        font-size: 14px;
+        color: var(--cinza);
+      }
+
+      .d1 .diary-card {
+        margin: 0 16px 16px;
+        background: var(--background-alt);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+      }
+
+      .d1 .diary-image {
+        width: 100%;
+        height: 280px;
+        background: linear-gradient(135deg, #f0f4e8 0%, #e8f0d8 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 64px;
+      }
+
+      .d1 .diary-content {
+        padding: 16px;
+      }
+
+      .d1 .diary-title {
+        font-size: 16px;
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+
+      .d1 .diary-meta {
+        font-size: 13px;
+        color: var(--cinza);
+      }
+
+      .d1 .reactions {
+        display: flex;
+        gap: 8px;
+        margin-top: 12px;
+      }
+
+      .d1 .reaction {
+        padding: 6px 12px;
+        background: var(--background);
+        border-radius: var(--radius-full);
+        font-size: 14px;
+        border: 1px solid #e5e7eb;
+      }
+
+      /* ============================================ */
+      /* DIRECTION 2: Warm & Cozy */
+      /* ============================================ */
+      .d2 {
+        background: #fff9f5;
+      }
+
+      .d2 .status-bar {
+        height: 44px;
+        padding: 12px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+        background: #fff9f5;
+      }
+
+      .d2 .header-section {
+        padding: 40px 20px 20px;
+        background: linear-gradient(180deg, var(--laranja) 0%, #fff9f5 100%);
+        border-radius: 0 0 32px 32px;
+      }
+
+      .d2 .avatar-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+
+      .d2 .avatar {
+        width: 56px;
+        height: 56px;
+        background: var(--background);
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        box-shadow: 0 4px 12px rgba(242, 145, 49, 0.3);
+      }
+
+      .d2 .greeting {
+        font-size: 24px;
+        font-weight: 600;
+        color: var(--background);
+      }
+
+      .d2 .greeting span {
+        font-weight: 400;
+        opacity: 0.9;
+      }
+
+      .d2 .diary-card {
+        margin: 20px 16px;
+        background: var(--background);
+        border-radius: var(--radius-2xl);
+        overflow: hidden;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      }
+
+      .d2 .diary-image {
+        width: 100%;
+        height: 240px;
+        background: linear-gradient(135deg, #ffe5d0 0%, #ffecd8 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 64px;
+        position: relative;
+      }
+
+      .d2 .heart-btn {
+        position: absolute;
+        bottom: 12px;
+        right: 12px;
+        width: 44px;
+        height: 44px;
+        background: var(--background);
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .d2 .diary-content {
+        padding: 20px;
+      }
+
+      .d2 .student-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: rgba(206, 222, 108, 0.2);
+        border-radius: var(--radius-full);
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--verde-lima-dark);
+        margin-bottom: 8px;
+      }
+
+      .d2 .diary-title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: var(--foreground);
+      }
+
+      .d2 .diary-text {
+        font-size: 14px;
+        color: var(--foreground-muted);
+        line-height: 1.6;
+      }
+
+      /* ============================================ */
+      /* DIRECTION 3: Bold & Modern */
+      /* ============================================ */
+      .d3 {
+        background: #0f0f0f;
+        color: #ffffff;
+      }
+
+      .d3 .status-bar {
+        height: 44px;
+        padding: 12px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+        color: #ffffff;
+      }
+
+      .d3 .header-section {
+        padding: 40px 20px 24px;
+      }
+
+      .d3 .greeting {
+        font-size: 40px;
+        font-weight: 800;
+        color: #ffffff;
+        line-height: 1.1;
+      }
+
+      .d3 .greeting .highlight {
+        color: var(--verde-lima);
+      }
+
+      .d3 .date {
+        font-size: 14px;
+        color: #6b7280;
+        margin-top: 8px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .d3 .story-row {
+        display: flex;
+        gap: 12px;
+        padding: 0 20px;
+        margin-bottom: 24px;
+        overflow-x: auto;
+      }
+
+      .d3 .story {
+        flex-shrink: 0;
+        width: 72px;
+        text-align: center;
+      }
+
+      .d3 .story-avatar {
+        width: 72px;
+        height: 72px;
+        border-radius: var(--radius-full);
+        background: linear-gradient(
+          135deg,
+          var(--verde-lima) 0%,
+          var(--laranja) 100%
+        );
+        padding: 3px;
+        margin-bottom: 6px;
+      }
+
+      .d3 .story-avatar-inner {
+        width: 100%;
+        height: 100%;
+        background: #1a1a1a;
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+      }
+
+      .d3 .story-name {
+        font-size: 12px;
+        color: #9ca3af;
+      }
+
+      .d3 .diary-card {
+        margin: 0 16px 16px;
+        background: #1a1a1a;
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+      }
+
+      .d3 .diary-image {
+        width: 100%;
+        height: 220px;
+        background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 64px;
+      }
+
+      .d3 .diary-content {
+        padding: 16px;
+      }
+
+      .d3 .diary-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 8px;
+      }
+
+      .d3 .diary-meta {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-size: 13px;
+        color: #6b7280;
+      }
+
+      .d3 .reactions {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .d3 .reaction {
+        padding: 8px 16px;
+        background: #262626;
+        border-radius: var(--radius-full);
+        font-size: 14px;
+        color: #ffffff;
+      }
+
+      /* ============================================ */
+      /* DIRECTION 4: Playful Family */
+      /* ============================================ */
+      .d4 {
+        background: #f0fdf4;
+      }
+
+      .d4 .status-bar {
+        height: 44px;
+        padding: 12px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .d4 .header-section {
+        padding: 40px 20px 20px;
+        background: var(--verde-lima);
+        border-radius: 0 0 40px 40px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .d4 .header-pattern {
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 120px;
+        opacity: 0.2;
+      }
+
+      .d4 .greeting {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--foreground);
+        position: relative;
+        z-index: 1;
+      }
+
+      .d4 .greeting .emoji {
+        font-size: 32px;
+      }
+
+      .d4 .subtitle {
+        font-size: 16px;
+        color: var(--foreground);
+        opacity: 0.8;
+        margin-top: 4px;
+      }
+
+      .d4 .kids-row {
+        display: flex;
+        gap: 16px;
+        padding: 24px 20px;
+        background: var(--background);
+        margin: -20px 16px 0;
+        border-radius: var(--radius-2xl);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        position: relative;
+        z-index: 2;
+      }
+
+      .d4 .kid-card {
+        flex: 1;
+        text-align: center;
+      }
+
+      .d4 .kid-avatar {
+        width: 64px;
+        height: 64px;
+        background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+        margin: 0 auto 8px;
+        border: 3px solid var(--verde-lima);
+      }
+
+      .d4 .kid-name {
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .d4 .kid-class {
+        font-size: 12px;
+        color: var(--cinza);
+      }
+
+      .d4 .new-badge {
+        display: inline-block;
+        padding: 2px 8px;
+        background: var(--laranja);
+        color: white;
+        border-radius: var(--radius-full);
+        font-size: 10px;
+        font-weight: 600;
+        margin-top: 4px;
+      }
+
+      .d4 .diary-card {
+        margin: 24px 16px;
+        background: var(--background);
+        border-radius: var(--radius-2xl);
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+        border: 2px solid #e5e7eb;
+      }
+
+      .d4 .diary-image {
+        width: 100%;
+        height: 200px;
+        background: linear-gradient(135deg, #dcfce7 0%, #d1fae5 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 80px;
+      }
+
+      .d4 .diary-content {
+        padding: 20px;
+      }
+
+      .d4 .activity-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        background: #fef3c7;
+        border-radius: var(--radius-full);
+        font-size: 13px;
+        font-weight: 500;
+        margin-bottom: 12px;
+      }
+
+      .d4 .diary-title {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+
+      .d4 .diary-text {
+        font-size: 14px;
+        color: var(--foreground-muted);
+      }
+
+      .d4 .emoji-reactions {
+        display: flex;
+        gap: 8px;
+        margin-top: 16px;
+      }
+
+      .d4 .emoji-btn {
+        width: 44px;
+        height: 44px;
+        background: #f3f4f6;
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        cursor: pointer;
+        transition: transform 0.2s ease;
+      }
+
+      .d4 .emoji-btn:hover {
+        transform: scale(1.1);
+      }
+
+      /* ============================================ */
+      /* DIRECTION 5: Premium Elegant */
+      /* ============================================ */
+      .d5 {
+        background: #fafafa;
+      }
+
+      .d5 .status-bar {
+        height: 44px;
+        padding: 12px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .d5 .header-section {
+        padding: 48px 24px 32px;
+      }
+
+      .d5 .logo {
+        width: 48px;
+        height: 48px;
+        background: var(--verde-lima);
+        border-radius: var(--radius-lg);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        margin-bottom: 24px;
+      }
+
+      .d5 .greeting {
+        font-size: 32px;
+        font-weight: 300;
+        color: var(--foreground);
+        letter-spacing: -0.5px;
+      }
+
+      .d5 .greeting strong {
+        font-weight: 600;
+      }
+
+      .d5 .date {
+        font-size: 14px;
+        color: var(--cinza);
+        margin-top: 8px;
+      }
+
+      .d5 .section-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--cinza);
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
+        padding: 0 24px;
+        margin-bottom: 16px;
+      }
+
+      .d5 .diary-card {
+        margin: 0 16px 16px;
+        background: var(--background);
+        border-radius: var(--radius-xl);
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+      }
+
+      .d5 .diary-image {
+        width: 100%;
+        height: 240px;
+        background: linear-gradient(135deg, #f5f5f5 0%, #e5e5e5 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 64px;
+      }
+
+      .d5 .diary-content {
+        padding: 20px;
+      }
+
+      .d5 .diary-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .d5 .diary-avatar {
+        width: 40px;
+        height: 40px;
+        background: #f3f4f6;
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+      }
+
+      .d5 .diary-info {
+        flex: 1;
+      }
+
+      .d5 .diary-name {
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .d5 .diary-time {
+        font-size: 13px;
+        color: var(--cinza);
+      }
+
+      .d5 .diary-title {
+        font-size: 16px;
+        color: var(--foreground);
+        line-height: 1.5;
+      }
+
+      .d5 .diary-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid #f3f4f6;
+      }
+
+      .d5 .action-btn {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 14px;
+        color: var(--foreground-muted);
+      }
+
+      .d5 .read-status {
+        font-size: 13px;
+        color: var(--verde-lima-dark);
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      /* ============================================ */
+      /* DIRECTION 6: Friendly Social */
+      /* ============================================ */
+      .d6 {
+        background: var(--background);
+      }
+
+      .d6 .status-bar {
+        height: 44px;
+        padding: 12px 24px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .d6 .header-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 20px;
+        border-bottom: 1px solid #f3f4f6;
+      }
+
+      .d6 .header-logo {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .d6 .logo-icon {
+        width: 36px;
+        height: 36px;
+        background: var(--verde-lima);
+        border-radius: var(--radius-md);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+      }
+
+      .d6 .logo-text {
+        font-size: 20px;
+        font-weight: 700;
+        color: var(--foreground);
+      }
+
+      .d6 .header-actions {
+        display: flex;
+        gap: 16px;
+      }
+
+      .d6 .icon-btn {
+        width: 40px;
+        height: 40px;
+        background: var(--background-alt);
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        position: relative;
+      }
+
+      .d6 .notification-dot {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 10px;
+        height: 10px;
+        background: var(--laranja);
+        border-radius: var(--radius-full);
+        border: 2px solid var(--background);
+      }
+
+      .d6 .story-section {
+        padding: 16px 0;
+        border-bottom: 1px solid #f3f4f6;
+      }
+
+      .d6 .story-scroll {
+        display: flex;
+        gap: 12px;
+        padding: 0 20px;
+        overflow-x: auto;
+      }
+
+      .d6 .story-item {
+        flex-shrink: 0;
+        text-align: center;
+      }
+
+      .d6 .story-ring {
+        width: 68px;
+        height: 68px;
+        border-radius: var(--radius-full);
+        padding: 3px;
+        background: linear-gradient(
+          135deg,
+          var(--verde-lima) 0%,
+          var(--laranja) 100%
+        );
+        margin-bottom: 6px;
+      }
+
+      .d6 .story-ring.seen {
+        background: #e5e7eb;
+      }
+
+      .d6 .story-inner {
+        width: 100%;
+        height: 100%;
+        background: var(--background);
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        padding: 2px;
+      }
+
+      .d6 .story-name {
+        font-size: 12px;
+        color: var(--foreground);
+        max-width: 68px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .d6 .feed-card {
+        padding: 16px 20px;
+        border-bottom: 1px solid #f3f4f6;
+      }
+
+      .d6 .feed-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 12px;
+      }
+
+      .d6 .feed-avatar {
+        width: 44px;
+        height: 44px;
+        background: linear-gradient(135deg, var(--verde-lima) 0%, #b8c85a 100%);
+        border-radius: var(--radius-full);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+      }
+
+      .d6 .feed-info {
+        flex: 1;
+      }
+
+      .d6 .feed-author {
+        font-size: 15px;
+        font-weight: 600;
+      }
+
+      .d6 .feed-meta {
+        font-size: 13px;
+        color: var(--cinza);
+      }
+
+      .d6 .feed-more {
+        font-size: 20px;
+        color: var(--cinza);
+      }
+
+      .d6 .feed-image {
+        width: calc(100% + 40px);
+        margin-left: -20px;
+        height: 300px;
+        background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 80px;
+      }
+
+      .d6 .feed-actions {
+        display: flex;
+        gap: 16px;
+        padding: 12px 0;
+      }
+
+      .d6 .feed-action {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 24px;
+      }
+
+      .d6 .feed-action span {
+        font-size: 14px;
+        color: var(--foreground-muted);
+      }
+
+      .d6 .feed-caption {
+        font-size: 14px;
+        color: var(--foreground);
+        line-height: 1.5;
+      }
+
+      .d6 .feed-caption strong {
+        font-weight: 600;
+      }
+
+      /* ============================================ */
+      /* Bottom Navigation */
+      /* ============================================ */
+      .bottom-nav {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 83px;
+        background: var(--background);
+        border-top: 1px solid #e5e7eb;
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+        padding-top: 8px;
+      }
+
+      .d3 .bottom-nav {
+        background: #0f0f0f;
+        border-color: #262626;
+      }
+
+      .nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        font-size: 10px;
+        color: var(--cinza);
+      }
+
+      .nav-item.active {
+        color: var(--verde-lima-dark);
+      }
+
+      .d3 .nav-item {
+        color: #6b7280;
+      }
+
+      .d3 .nav-item.active {
+        color: var(--verde-lima);
+      }
+
+      .nav-icon {
+        font-size: 24px;
+      }
+
+      /* Description Section */
+      .direction-description {
+        max-width: 600px;
+        margin: 0 auto var(--space-8);
+        padding: 0 var(--space-6);
+      }
+
+      .description-card {
+        background: var(--background);
+        border-radius: var(--radius-xl);
+        padding: var(--space-6);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+      }
+
+      .description-card h3 {
+        font-size: 20px;
+        font-weight: 700;
+        margin-bottom: var(--space-2);
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+      }
+
+      .description-card h3 .number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        background: var(--verde-lima);
+        border-radius: var(--radius-full);
+        font-size: 14px;
+      }
+
+      .description-card p {
+        color: var(--foreground-muted);
+        margin-bottom: var(--space-4);
+        line-height: 1.6;
+      }
+
+      .description-card ul {
+        list-style: none;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-2);
+      }
+
+      .description-card li {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        font-size: 14px;
+        color: var(--foreground);
+      }
+
+      .description-card li::before {
+        content: "✓";
+        color: var(--verde-lima-dark);
+        font-weight: 700;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: var(--space-8) var(--space-6);
+        color: var(--foreground-muted);
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <h1>🎨 Essencia - Design Directions</h1>
+      <p>
+        Explore 6 direções visuais diferentes para o app. Cada uma usa a mesma
+        paleta de cores (Verde Lima, Laranja) mas com abordagens distintas.
+      </p>
+    </header>
+
+    <div class="direction-selector">
+      <button class="direction-btn active" data-direction="1">
+        1. Clean Minimal
+      </button>
+      <button class="direction-btn" data-direction="2">2. Warm & Cozy</button>
+      <button class="direction-btn" data-direction="3">3. Bold & Modern</button>
+      <button class="direction-btn" data-direction="4">
+        4. Playful Family
+      </button>
+      <button class="direction-btn" data-direction="5">
+        5. Premium Elegant
+      </button>
+      <button class="direction-btn" data-direction="6">
+        6. Friendly Social
+      </button>
+    </div>
+
+    <div class="direction-description">
+      <div class="description-card" id="desc-1">
+        <h3><span class="number">1</span> Clean Minimal</h3>
+        <p>
+          Foco absoluto no conteúdo com muito espaço em branco. Design neutro
+          que não compete com as fotos do diário. Ideal para pais que querem
+          informação rápida e sem distrações.
+        </p>
+        <ul>
+          <li>Espaço em branco generoso</li>
+          <li>Tipografia leve (300-400)</li>
+          <li>Sem sombras pesadas</li>
+          <li>Foco no conteúdo</li>
+        </ul>
+      </div>
+      <div class="description-card" id="desc-2" style="display: none">
+        <h3><span class="number">2</span> Warm & Cozy</h3>
+        <p>
+          Design acolhedor com cantos muito arredondados, sombras suaves e
+          gradientes quentes. Transmite o calor e carinho dos valores da escola.
+          Perfeito para criar conexão emocional.
+        </p>
+        <ul>
+          <li>Gradientes quentes</li>
+          <li>Bordas super arredondadas</li>
+          <li>Sombras suaves</li>
+          <li>Cores acolhedoras</li>
+        </ul>
+      </div>
+      <div class="description-card" id="desc-3" style="display: none">
+        <h3><span class="number">3</span> Bold & Modern</h3>
+        <p>
+          Dark mode com tipografia impactante e forte contraste. Design moderno
+          e tech-forward. Ideal para pais mais jovens que valorizam estética
+          contemporânea.
+        </p>
+        <ul>
+          <li>Dark mode nativo</li>
+          <li>Tipografia bold (700-800)</li>
+          <li>Alto contraste</li>
+          <li>Stories como destaque</li>
+        </ul>
+      </div>
+      <div class="description-card" id="desc-4" style="display: none">
+        <h3><span class="number">4</span> Playful Family</h3>
+        <p>
+          Design lúdico com ilustrações, emojis e elementos coloridos. Transmite
+          alegria e energia infantil. Perfeito para escolas que valorizam o
+          brincar e a criatividade.
+        </p>
+        <ul>
+          <li>Emojis como ícones</li>
+          <li>Cores vibrantes</li>
+          <li>Formas orgânicas</li>
+          <li>Cards de filhos em destaque</li>
+        </ul>
+      </div>
+      <div class="description-card" id="desc-5" style="display: none">
+        <h3><span class="number">5</span> Premium Elegant</h3>
+        <p>
+          Minimalismo sofisticado com tipografia refinada e espaçamento
+          generoso. Design atemporal que transmite qualidade e profissionalismo.
+          Ideal para escolas premium.
+        </p>
+        <ul>
+          <li>Tipografia refinada</li>
+          <li>Espaçamento amplo</li>
+          <li>Hierarquia clara</li>
+          <li>Detalhes sutis</li>
+        </ul>
+      </div>
+      <div class="description-card" id="desc-6" style="display: none">
+        <h3><span class="number">6</span> Friendly Social</h3>
+        <p>
+          Inspirado em redes sociais como Instagram. Stories, feed, reactions e
+          interações familiares. Ideal para pais que já dominam esse padrão de
+          navegação.
+        </p>
+        <ul>
+          <li>Stories de turmas/filhos</li>
+          <li>Feed estilo Instagram</li>
+          <li>Reactions e comentários</li>
+          <li>Padrão familiar</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mockup-container">
+      <div class="phone-notch"></div>
+      <div class="mockup-screen">
+        <!-- Direction 1: Clean Minimal -->
+        <div class="direction d1 active" data-direction="1">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+          <div class="header-section">
+            <div class="greeting">Olá, <strong>Marina</strong></div>
+            <div class="date">Quinta-feira, 12 de Dezembro</div>
+          </div>
+          <div class="diary-card">
+            <div class="diary-image">👦🎨</div>
+            <div class="diary-content">
+              <div class="diary-title">Atividade de Artes</div>
+              <div class="diary-meta">João • Maternal II • 14:30</div>
+              <div class="reactions">
+                <span class="reaction">❤️ 12</span>
+                <span class="reaction">💬 3</span>
+              </div>
+            </div>
+          </div>
+          <div class="diary-card">
+            <div class="diary-image">👧📚</div>
+            <div class="diary-content">
+              <div class="diary-title">Hora da Leitura</div>
+              <div class="diary-meta">Maria • Jardim I • 10:15</div>
+              <div class="reactions">
+                <span class="reaction">❤️ 8</span>
+              </div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item active">
+              <span class="nav-icon">📔</span>
+              <span>Diário</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">💬</span>
+              <span>Mensagens</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">📅</span>
+              <span>Agenda</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">👤</span>
+              <span>Perfil</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Direction 2: Warm & Cozy -->
+        <div class="direction d2" data-direction="2">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+          <div class="header-section">
+            <div class="avatar-row">
+              <div class="avatar">👩</div>
+              <div class="greeting">Olá, Marina! <span>💚</span></div>
+            </div>
+          </div>
+          <div class="diary-card">
+            <div class="diary-image">
+              👦🌟
+              <div class="heart-btn">❤️</div>
+            </div>
+            <div class="diary-content">
+              <div class="student-tag">👦 João • Maternal II</div>
+              <div class="diary-title">Momento especial de hoje!</div>
+              <div class="diary-text">
+                João participou da atividade de artes com muita alegria. Ele
+                adorou pintar com as mãos! 🎨
+              </div>
+            </div>
+          </div>
+          <div class="diary-card">
+            <div class="diary-image">
+              👧📖
+              <div class="heart-btn">🧡</div>
+            </div>
+            <div class="diary-content">
+              <div class="student-tag">👧 Maria • Jardim I</div>
+              <div class="diary-title">Hora da historinha</div>
+              <div class="diary-text">
+                Maria ouviu atenta a história do Patinho Feio e quis contar para
+                todos!
+              </div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item active">
+              <span class="nav-icon">📔</span>
+              <span>Diário</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">💬</span>
+              <span>Mensagens</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">📅</span>
+              <span>Agenda</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">👤</span>
+              <span>Perfil</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Direction 3: Bold & Modern -->
+        <div class="direction d3" data-direction="3">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+          <div class="header-section">
+            <div class="greeting">
+              Bom dia,<br /><span class="highlight">Marina</span>
+            </div>
+            <div class="date">12 Dezembro 2025</div>
+          </div>
+          <div class="story-row">
+            <div class="story">
+              <div class="story-avatar">
+                <div class="story-avatar-inner">👦</div>
+              </div>
+              <div class="story-name">João</div>
+            </div>
+            <div class="story">
+              <div class="story-avatar">
+                <div class="story-avatar-inner">👧</div>
+              </div>
+              <div class="story-name">Maria</div>
+            </div>
+            <div class="story">
+              <div class="story-avatar">
+                <div class="story-avatar-inner">🏫</div>
+              </div>
+              <div class="story-name">Escola</div>
+            </div>
+          </div>
+          <div class="diary-card">
+            <div class="diary-image">👦🎨</div>
+            <div class="diary-content">
+              <div class="diary-title">Atividade de Artes</div>
+              <div class="diary-meta">
+                <span>👦 João</span>
+                <span>🕐 14:30</span>
+              </div>
+              <div class="reactions">
+                <span class="reaction">❤️ 12</span>
+                <span class="reaction">💬 3</span>
+                <span class="reaction">📤</span>
+              </div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item active">
+              <span class="nav-icon">📔</span>
+              <span>Diário</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">💬</span>
+              <span>Chat</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">📅</span>
+              <span>Agenda</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">⚙️</span>
+              <span>Config</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Direction 4: Playful Family -->
+        <div class="direction d4" data-direction="4">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+          <div class="header-section">
+            <div class="header-pattern">🌈</div>
+            <div class="greeting">Oi Marina! <span class="emoji">👋</span></div>
+            <div class="subtitle">Veja o dia dos seus pequenos</div>
+          </div>
+          <div class="kids-row">
+            <div class="kid-card">
+              <div class="kid-avatar">👦</div>
+              <div class="kid-name">João</div>
+              <div class="kid-class">Maternal II</div>
+              <span class="new-badge">2 NOVOS</span>
+            </div>
+            <div class="kid-card">
+              <div class="kid-avatar">👧</div>
+              <div class="kid-name">Maria</div>
+              <div class="kid-class">Jardim I</div>
+              <span class="new-badge">1 NOVO</span>
+            </div>
+          </div>
+          <div class="diary-card">
+            <div class="diary-image">🎨👦✨</div>
+            <div class="diary-content">
+              <div class="activity-tag">🎨 Artes</div>
+              <div class="diary-title">João adorou pintar!</div>
+              <div class="diary-text">
+                Usamos tintas e pincéis grandes. Olha que lindo ficou!
+              </div>
+              <div class="emoji-reactions">
+                <div class="emoji-btn">❤️</div>
+                <div class="emoji-btn">😍</div>
+                <div class="emoji-btn">👏</div>
+                <div class="emoji-btn">🥰</div>
+              </div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item active">
+              <span class="nav-icon">📔</span>
+              <span>Diário</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">💬</span>
+              <span>Recados</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">📅</span>
+              <span>Eventos</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">👨‍👩‍👧‍👦</span>
+              <span>Família</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Direction 5: Premium Elegant -->
+        <div class="direction d5" data-direction="5">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+          <div class="header-section">
+            <div class="logo">🌱</div>
+            <div class="greeting">Bom dia, <strong>Marina</strong></div>
+            <div class="date">Quinta-feira, 12 de dezembro de 2025</div>
+          </div>
+          <div class="section-title">Diário de Hoje</div>
+          <div class="diary-card">
+            <div class="diary-image">👦🎨</div>
+            <div class="diary-content">
+              <div class="diary-header">
+                <div class="diary-avatar">👦</div>
+                <div class="diary-info">
+                  <div class="diary-name">João Silva</div>
+                  <div class="diary-time">Maternal II • 14:30</div>
+                </div>
+              </div>
+              <div class="diary-title">
+                João participou da atividade de artes com entusiasmo. Ele
+                demonstrou muita criatividade ao usar as cores.
+              </div>
+              <div class="diary-actions">
+                <div class="action-btn">❤️ Reagir</div>
+                <div class="action-btn">💬 Comentar</div>
+                <div class="read-status">✓✓ Visto</div>
+              </div>
+            </div>
+          </div>
+          <div class="diary-card">
+            <div class="diary-image">👧📚</div>
+            <div class="diary-content">
+              <div class="diary-header">
+                <div class="diary-avatar">👧</div>
+                <div class="diary-info">
+                  <div class="diary-name">Maria Silva</div>
+                  <div class="diary-time">Jardim I • 10:15</div>
+                </div>
+              </div>
+              <div class="diary-title">
+                Momento de leitura compartilhada. Maria adorou a história e quis
+                recontar para a turma.
+              </div>
+              <div class="diary-actions">
+                <div class="action-btn">❤️ Reagir</div>
+                <div class="action-btn">💬 Comentar</div>
+                <div class="read-status">✓✓ Visto</div>
+              </div>
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item active">
+              <span class="nav-icon">📔</span>
+              <span>Diário</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">✉️</span>
+              <span>Mensagens</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">📆</span>
+              <span>Agenda</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">○</span>
+              <span>Perfil</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Direction 6: Friendly Social -->
+        <div class="direction d6" data-direction="6">
+          <div class="status-bar">
+            <span>9:41</span>
+            <span>📶 🔋</span>
+          </div>
+          <div class="header-bar">
+            <div class="header-logo">
+              <div class="logo-icon">🌱</div>
+              <div class="logo-text">Essencia</div>
+            </div>
+            <div class="header-actions">
+              <div class="icon-btn">
+                🔔
+                <div class="notification-dot"></div>
+              </div>
+              <div class="icon-btn">💬</div>
+            </div>
+          </div>
+          <div class="story-section">
+            <div class="story-scroll">
+              <div class="story-item">
+                <div class="story-ring">
+                  <div class="story-inner">👦</div>
+                </div>
+                <div class="story-name">João</div>
+              </div>
+              <div class="story-item">
+                <div class="story-ring">
+                  <div class="story-inner">👧</div>
+                </div>
+                <div class="story-name">Maria</div>
+              </div>
+              <div class="story-item">
+                <div class="story-ring seen">
+                  <div class="story-inner">🏫</div>
+                </div>
+                <div class="story-name">Maternal II</div>
+              </div>
+              <div class="story-item">
+                <div class="story-ring seen">
+                  <div class="story-inner">🎭</div>
+                </div>
+                <div class="story-name">Jardim I</div>
+              </div>
+            </div>
+          </div>
+          <div class="feed-card">
+            <div class="feed-header">
+              <div class="feed-avatar">👩‍🏫</div>
+              <div class="feed-info">
+                <div class="feed-author">Profa. Ana Paula</div>
+                <div class="feed-meta">Maternal II • 2h atrás</div>
+              </div>
+              <div class="feed-more">⋯</div>
+            </div>
+            <div class="feed-image">👦🎨✨</div>
+            <div class="feed-actions">
+              <div class="feed-action">❤️ <span>24</span></div>
+              <div class="feed-action">💬 <span>5</span></div>
+              <div class="feed-action">📤</div>
+            </div>
+            <div class="feed-caption">
+              <strong>Profa. Ana Paula</strong> João estava super animado na
+              atividade de artes! Ele escolheu as cores sozinho e fez uma
+              pintura linda 🎨💚
+            </div>
+          </div>
+          <div class="bottom-nav">
+            <div class="nav-item active">
+              <span class="nav-icon">🏠</span>
+              <span>Início</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">🔍</span>
+              <span>Buscar</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">📅</span>
+              <span>Agenda</span>
+            </div>
+            <div class="nav-item">
+              <span class="nav-icon">👤</span>
+              <span>Perfil</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>💚 Essencia - Design Directions para Colégio Essência Feliz</p>
+      <p>Clique nos botões acima para alternar entre as 6 direções de design</p>
+    </footer>
+
+    <script>
+      // Direction switching
+      const buttons = document.querySelectorAll(".direction-btn");
+      const directions = document.querySelectorAll(".direction");
+      const descriptions = document.querySelectorAll('[id^="desc-"]');
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          const direction = button.dataset.direction;
+
+          // Update buttons
+          buttons.forEach((b) => b.classList.remove("active"));
+          button.classList.add("active");
+
+          // Update mockups
+          directions.forEach((d) => {
+            d.classList.remove("active");
+            if (d.dataset.direction === direction) {
+              d.classList.add("active");
+            }
+          });
+
+          // Update descriptions
+          descriptions.forEach((desc) => {
+            desc.style.display = "none";
+          });
+          document.getElementById(`desc-${direction}`).style.display = "block";
+        });
+      });
+    </script>
+  </body>
+</html>
