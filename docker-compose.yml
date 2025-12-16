@@ -29,7 +29,7 @@ services:
     image: redis:7-alpine
     container_name: essencia-redis
     ports:
-      - "6379:6379"
+      - "6381:6379"
     volumes:
       - essencia_redis_data:/data
     healthcheck:
@@ -196,7 +196,7 @@ services:
       dockerfile: Dockerfile
     container_name: essencia-landing
     ports:
-      - "3001:3000"
+      - "3002:3000"
     environment:
       - NODE_ENV=production
       - NEXT_PUBLIC_API_URL=http://localhost:3000/api/v1
@@ -212,7 +212,7 @@ services:
       dockerfile: Dockerfile
     container_name: essencia-admin
     ports:
-      - "3002:3000"
+      - "3003:3000"
     environment:
       - NODE_ENV=production
       - NEXT_PUBLIC_API_URL=http://localhost:3000/api/v1
